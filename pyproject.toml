@@ -1,0 +1,69 @@
+[project]
+name = "ml-platform-release-gates"
+version = "0.1.0"
+description = "Model Governance & Release Gatekeeper MLOps reference system"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Codex" }]
+dependencies = [
+  "fastapi>=0.111.0",
+  "uvicorn>=0.30.0",
+  "pydantic>=2.6.0",
+  "pydantic-settings>=2.2.0",
+  "sqlalchemy>=2.0.30",
+  "prometheus-client>=0.20.0",
+  "opentelemetry-api>=1.24.0",
+  "opentelemetry-sdk>=1.24.0",
+  "opentelemetry-instrumentation-fastapi>=0.45b0",
+  "opentelemetry-instrumentation-requests>=0.45b0",
+  "boto3>=1.34.0",
+  "scikit-learn>=1.4.0",
+  "numpy>=1.26.0",
+  "joblib>=1.4.0",
+  "python-json-logger>=2.0.7",
+  "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2.0",
+  "pytest-cov>=5.0.0",
+  "ruff>=0.4.0",
+  "mypy>=1.10.0",
+  "types-requests>=2.32.0",
+  "types-boto3>=1.0.0",
+]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+mypy_path = "src"
+ignore_missing_imports = true
+disallow_subclassing_any = false
+disable_error_code = ["untyped-decorator"]
+
+[tool.pytest.ini_options]
+addopts = "-q --disable-warnings --maxfail=1 --cov=mlprg --cov-report=term-missing"
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
